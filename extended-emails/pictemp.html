@@ -1,0 +1,95 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+
+  @font-face {{
+    font-family: 'Montserrat';
+    src: url('file:///C:/Users/ABC/Documents/DevDay-26-Automations/font/static/Montserrat-Regular.ttf') format('truetype');
+    font-weight: 500;
+  }}
+
+  @font-face {{
+    font-family: 'Montserrat';
+    src: url('file:///C:/Users/ABC/Documents/DevDay-26-Automations/font/static/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }}
+
+  body {{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+  }}
+
+  .container {{
+    position: relative;
+    width: 100%;
+  }}
+
+  .container img {{
+    display: block;
+    width: 100%;
+    height: auto;
+  }}
+
+  .overlay {{
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 75%;
+    font-size: 20.5px;
+    color: black;
+    line-height: 1.6;
+  }}
+
+  .overlay p {{
+    margin-bottom: 15px;
+  }}
+
+  .overlay b {{
+    font-weight: 700;
+  }}
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="file:///{image_path}" alt="Letterhead">
+
+    <div class="overlay">
+
+      <p>Dear {name},</p>
+
+      <p>
+        <b>Congratulations</b> on your selection to the
+        <b>Extended Executive Committee</b> for the 2025-26 term of the
+        <b>ACM Developers Day 2026!</b>
+        We are excited to welcome you as the <b>{position}</b> of
+        <b>Team {team}</b> and look forward to your leadership in driving the
+        team’s success.
+      </p>
+
+      <p>
+        Your role will be pivotal in fulfilling the operational responsibilities expected
+        from your team, and we believe your strategic insights and leadership will contribute
+        greatly to our goals. With your expertise, we are confident that you will guide your
+        team to deliver their best, ensuring that our objectives are met effectively.
+      </p>
+
+      <p>
+        We are committed to fostering a collaborative and supportive environment, and your
+        leadership will play a crucial role in helping us grow as a cohesive unit.
+      </p>
+
+      <p>
+        Once again, congratulations and welcome to the team! We’re excited to see the
+        impact we will make together.
+      </p>
+
+      <p>Best Regards,</p>
+
+    </div>
+  </div>
+</body>
+</html>
