@@ -21,6 +21,7 @@ def driver_function(excel_file):
             try:
                 recieverEmail = row['email']
                 subject = "Welcome to Developers Day 2026"
+                # subject = "Brand Ambassador Code - Developer's Day 2026"
 
                 # Create a list of team members from the file data
                 htmlContent = get_html_content(template_path, row.to_dict())

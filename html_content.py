@@ -6,6 +6,8 @@ def get_html_content(template_path, params):
 
     # Replace placeholders with actual values
     html_content = template.format(name=params["name"], position=params["position"], team=params["team"])
+    # html_content = template.format(name=params["name"], code=params["code"])
+
 
     return html_content
 
