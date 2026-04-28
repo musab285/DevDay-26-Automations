@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zone 3 - Warzone</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0A0F1F;
+    color: white;
+}
+
+.container {
+    padding: 40px;
+}
+
+.title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #FF2D95;
+    text-shadow: 0 0 15px #A020F0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.card {
+    background: #12172A;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #8A2BE2;
+    box-shadow: 0 0 15px rgba(138,43,226,0.5);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #FF2D95;
+}
+
+.mission {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.node {
+    width: 12px;
+    height: 12px;
+    background: #FF2D95;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #FF2D95;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="title">Zone 3: Operation Warzone</div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="node"></div>
+            <h3>API Blitz</h3>
+            <p class="mission">Mission 1: Operation Urzikstan</p>
+        </div>
+
+        <div class="card">
+            <div class="node"></div>
+            <h3>Syscore</h3>
+            <p class="mission">Mission 2: Operation Shadow</p>
+        </div>
+
+        <div class="card">
+            <div class="node"></div>
+            <h3>SQL Showdown</h3>
+            <p class="mission">Mission 3: Operation Paper Trail</p>
+        </div>
+
+        <div class="card">
+            <div class="node"></div>
+            <h3>Class Wars</h3>
+            <p class="mission">Mission 4: Operation 141</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

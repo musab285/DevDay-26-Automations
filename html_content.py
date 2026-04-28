@@ -5,8 +5,21 @@ def get_html_content(template_path, params):
         template = f.read()
 
     # Replace placeholders with actual values
-    html_content = template.format(name=params["name"], position=params["position"], team=params["team"])
+    # html_content = template.format(name=params["name"], position=params["position"], team=params["team"])
     # html_content = template.format(name=params["name"], code=params["code"])
+
+    html_content = template.format(
+      ParticipantName=params['leader_name'],
+      TeamName=params['team_name'],
+      LeaderName=params['leader_name'],
+      OtherMembers=params['other_members'],
+      ModuleName=params['module_name'],
+      DateTime=params.get('date_time', 'Thursday, 30 April 2026'),
+      Venue=params.get('venue', 'To be announced'),
+      PaymentStatus=params['payment_status'],
+      VerificationStatus=params['verification_status'],
+      paymentStatusColor='#22C55E' if params['payment_status'] == 'SUBMITTED' else "red"
+    )
 
 
     return html_content

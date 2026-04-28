@@ -1,10 +1,14 @@
 # import easygui
 import pandas as pd
 from datetime import datetime
-from send_email import sendEmailContent 
+from send_email import sendEmailContent, sendRescheduleEmail
 from html_content import get_html_content
 from gen_img import generate
 import easygui
+import imaplib
+ 
+from dotenv import load_dotenv
+import os
 
 def driver_function(excel_file):
     """Reads email addresses from an Excel file and sends emails. Stores unsent emails in 'failed_emails.xlsx'."""
@@ -15,27 +19,41 @@ def driver_function(excel_file):
     try:
         
         # Attempt to read the Excel file
-        all_data = pd.read_excel(excel_file, sheet_name="Sheet1")
+        all_data = pd.read_excel(excel_file)
 
         for _, row in all_data.iterrows(): 
             try:
-                recieverEmail = row['email']
-                subject = "Welcome to Developers Day 2026"
+                recieverEmail = row['leader_email']
+                members_raw = row.get('members_email', '')
+                if pd.isna(members_raw):
+                    members = []
+                else:
+                    members = [email.strip() for email in str(members_raw).split(',') if email.strip()]
+                # subject = f"Developers Day 2026 Rescheduled - Team {row['team_name']}"
+                # subject = f"Developers Day 2026 Rescheduled"
+                # subject = f"UNCLEAR Payment Receipt - Team {row['team_name']}"
+                # subject = f"Developers Day 2026 - {row['module_name']} Module Dissolved"
+                # subject = f"Developers Day 2026 Hackathon - Team {row['team_name']}"
+                subject = f"Developers Day 2026 - Laptop Requirement Reminder"
                 # subject = "Brand Ambassador Code - Developer's Day 2026"
 
                 # Create a list of team members from the file data
                 htmlContent = get_html_content(template_path, row.to_dict())
 
                 # Generate image for the participant
-                generate(row["name"], row["position"], row["team"])
+                # generate(row["name"], row["position"], row["team"])
 
                 # Send email and track failures
-                if not sendEmailContent(recieverEmail, subject, htmlContent, row["name"]):
+                # if not sendEmailContent(recieverEmail, subject, htmlContent, row["name"]):
+                #     failed_records.append(row.to_dict())
+                #     logfile.write(f"{datetime.now()} : Couldn't send email to {recieverEmail}\n")
+                # else:
+                #     logfile.write(f"{datetime.now()} : Email sent to {recieverEmail}\n")
+                if not sendRescheduleEmail(recieverEmail, subject, htmlContent, members):
                     failed_records.append(row.to_dict())
                     logfile.write(f"{datetime.now()} : Couldn't send email to {recieverEmail}\n")
                 else:
                     logfile.write(f"{datetime.now()} : Email sent to {recieverEmail}\n")
-
 
             except KeyError as e:
                 print(f"[!] Missing column in the Excel file: {e}")
@@ -45,6 +63,34 @@ def driver_function(excel_file):
                 print(f"[!] Error processing email for {recieverEmail}: {e}")
                 logfile.write(f"{datetime.now()} : [!] Error processing email for {recieverEmail}: {e}\n")
                 failed_records.append(row.to_dict())
+
+        load_dotenv()
+        senderEmail = os.getenv("SENDER_EMAIL")
+        senderPassword = os.getenv("SENDER_PASSWORD")
+        imap = imaplib.IMAP4_SSL("imap.gmail.com")
+        imap.login(senderEmail, senderPassword)
+
+        imap.select('"[Gmail]/Sent Mail"')
+
+        # result, data = imap.search(None, 'SUBJECT "UNCLEAR Payment Receipt - Team"')
+        # result, data = imap.search(None, 'SUBJECT "Module Dissolved"')
+        # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 Hackathon - Team"')
+        result, data = imap.search(None, 'SUBJECT "Developers Day 2026 - Laptop Requirement Reminder"')
+
+
+
+
+        for num in data[0].split():
+            # imap.store(num, '+X-GM-LABELS', 'UnclearScreenshot')
+            # imap.store(num, '+X-GM-LABELS', 'DissolvedCompetitions')
+            # imap.store(num, '+X-GM-LABELS', 'WAgroups')
+            imap.store(num, '+X-GM-LABELS', 'Laptops')
+
+
+
+        imap.close()
+        imap.logout()
+
 
     except FileNotFoundError:
         print(" Error: The specified Excel file was not found.")
@@ -64,4 +110,4 @@ file_name = easygui.fileopenbox(title="Select Excel File", filetypes=["*.xlsx"])
 if file_name:
     driver_function(file_name)
 else:
-    print(" No file selected.")
+    print("No file selected.")

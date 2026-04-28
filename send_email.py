@@ -96,3 +96,44 @@ def sendEmailContent(recieverEmail, subject, htmlContent, name):
 #     except Exception as e:
 #         print(f"[X] Error sending email: {e}")
 #         return False
+
+def sendRescheduleEmail(recieverEmail, subject, htmlContent, members): 
+    smtp = signIn()
+    if not smtp:
+        print(f"[X] SMTP sign-in failed. Email to {recieverEmail} not sent.")
+        return False
+
+    try:
+        msg = MIMEMultipart("related")
+        msg["From"] = senderEmail
+        msg["To"] = recieverEmail
+        msg["Subject"] = subject
+
+        cc_members = []
+        if isinstance(members, list):
+            for member in members[:3]:
+                if member is None:
+                    continue
+                email = str(member).strip()
+                if email and email.lower() not in {"nan", "none", "null"} and email != recieverEmail:
+                    cc_members.append(email)
+
+        if cc_members:
+            msg["Cc"] = ", ".join(cc_members)
+
+        
+
+        msg.attach(MIMEText(str(htmlContent), 'html'))
+
+        recipients = [recieverEmail] + cc_members
+        smtp.sendmail(senderEmail, recipients, msg.as_string())
+        smtp.quit()
+        print(f"[+] Email sent successfully to {recieverEmail}" + (f" with CC to {', '.join(cc_members)}" if cc_members else ""))
+        return True
+
+    except smtplib.SMTPRecipientsRefused:
+        print(f"[X] Invalid email address: {recieverEmail}. Saving to unsent list.")
+        return False
+    except Exception as e:
+        print(f"[X] Error sending email: {e}")
+        return False
