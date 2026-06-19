@@ -1,7 +1,7 @@
 # import easygui
 import pandas as pd
 from datetime import datetime
-from send_email import sendEmailContent, sendRescheduleEmail
+from send_email import sendEmailContent, sendRescheduleEmail, sendPortal
 from html_content import get_html_content
 from gen_img import generate
 import easygui
@@ -9,6 +9,7 @@ import imaplib
  
 from dotenv import load_dotenv
 import os
+
 
 def driver_function(excel_file):
     """Reads email addresses from an Excel file and sends emails. Stores unsent emails in 'failed_emails.xlsx'."""
@@ -24,6 +25,7 @@ def driver_function(excel_file):
         for _, row in all_data.iterrows(): 
             try:
                 recieverEmail = row['leader_email']
+                # recieverEmail = row['email']
                 members_raw = row.get('members_email', '')
                 if pd.isna(members_raw):
                     members = []
@@ -34,8 +36,15 @@ def driver_function(excel_file):
                 # subject = f"UNCLEAR Payment Receipt - Team {row['team_name']}"
                 # subject = f"Developers Day 2026 - {row['module_name']} Module Dissolved"
                 # subject = f"Developers Day 2026 Hackathon - Team {row['team_name']}"
-                subject = f"Developers Day 2026 - Laptop Requirement Reminder"
+                # subject = f"Developers Day 2026 - Laptop Requirement Reminder"
                 # subject = "Brand Ambassador Code - Developer's Day 2026"
+                # subject = f"Developers Day 2026 Event Info - Team {row['team_name']}"
+                # subject = f"Developers Day 2026 - Participant Portal"
+                # subject = f"Developers Day 2026 - {row['module_name']} Refund Update"
+                # subject = f"Developers Day 2026 - Closing Ceremony"
+                # subject = f"Developers Day 2026 - {row['module_name']} Prize Money Distribution"
+                subject = f"Developers Day 2026 - Update Regarding Winnings"
+                
 
                 # Create a list of team members from the file data
                 htmlContent = get_html_content(template_path, row.to_dict())
@@ -50,6 +59,7 @@ def driver_function(excel_file):
                 # else:
                 #     logfile.write(f"{datetime.now()} : Email sent to {recieverEmail}\n")
                 if not sendRescheduleEmail(recieverEmail, subject, htmlContent, members):
+                # if not sendPortal(recieverEmail, subject, htmlContent):
                     failed_records.append(row.to_dict())
                     logfile.write(f"{datetime.now()} : Couldn't send email to {recieverEmail}\n")
                 else:
@@ -75,7 +85,14 @@ def driver_function(excel_file):
         # result, data = imap.search(None, 'SUBJECT "UNCLEAR Payment Receipt - Team"')
         # result, data = imap.search(None, 'SUBJECT "Module Dissolved"')
         # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 Hackathon - Team"')
-        result, data = imap.search(None, 'SUBJECT "Developers Day 2026 - Laptop Requirement Reminder"')
+        # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 - Laptop Requirement Reminder"')
+        # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 Event Info - Team"')
+        # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 - Participant Portal"')
+        # result, data = imap.search(None, 'SUBJECT "Refund Update"')
+        # result, data = imap.search(None, 'SUBJECT "Developers Day 2026 - Closing Ceremony"')
+        # result, data = imap.search(None, f'SUBJECT "Prize Money Distribution"')
+        result, data = imap.search(None, f'SUBJECT "Update Regarding Winnings"')
+
 
 
 
@@ -84,7 +101,13 @@ def driver_function(excel_file):
             # imap.store(num, '+X-GM-LABELS', 'UnclearScreenshot')
             # imap.store(num, '+X-GM-LABELS', 'DissolvedCompetitions')
             # imap.store(num, '+X-GM-LABELS', 'WAgroups')
-            imap.store(num, '+X-GM-LABELS', 'Laptops')
+            # imap.store(num, '+X-GM-LABELS', 'Laptops')
+            # imap.store(num, '+X-GM-LABELS', 'EventInfo')
+            # imap.store(num, '+X-GM-LABELS', 'ParticipantPortal')
+            # imap.store(num, '+X-GM-LABELS', 'Refunds')
+            # imap.store(num, '+X-GM-LABELS', 'ClosingCeremony')
+            imap.store(num, '+X-GM-LABELS', 'PrizeMoney')
+            
 
 
 

@@ -1,0 +1,70 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Certificate Design</title>
+            <style>
+                @font-face {{
+                    font-family: "Birthstone";
+                    src: url("file:///C:/Users/ABC/Documents/DevDay-26-Automations/certificates/Birthstone-Regular.ttf") format('truetype');
+                }}
+
+                body {{
+                    padding: 0;
+                    margin: 0;
+                    color: #8B0000;
+                    font-family: "Birthstone";
+                }}
+
+                .container {{
+                    position: absolute;
+                    overflow: hidden;
+                    text-align: center;
+                    display: block;
+                    background-color: purple;
+                }}
+                .name{{
+                    padding: 0px;
+                    margin: 0px;
+                    font-size: 58.1px;
+                }}
+                .name-div{{
+                    position: absolute;
+                    text-align: center;
+                    height: 0.45in;
+                    top: 218px;
+                    width: 100%;
+                    left: -50px;
+                }}
+                .team{{
+                    padding: 0px;
+                    margin: 0px;
+                    font-size: 33.5px;
+                }}
+                .team-div{{
+                    position: absolute;
+                    text-align: center;
+                    top: 325px;
+                    width: 100%;
+                    left: -55px;
+                }}
+                img{{
+                    width: 100%;
+                    z-index: -1;
+                }}
+            </style>
+        </head>
+        <body>
+            <img src="file:///C:/Users/ABC/Documents/DevDay-26-Automations/certificates/design.png" alt="">
+            <div class="name-div">
+                <p class="name">{participant_name}</p>
+            </div>
+            <div class="team-div">
+                <p class="team">{competition_name}</p>
+            </div>
+        </body>
+        </html>
+    

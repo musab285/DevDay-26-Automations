@@ -137,3 +137,27 @@ def sendRescheduleEmail(recieverEmail, subject, htmlContent, members):
     except Exception as e:
         print(f"[X] Error sending email: {e}")
         return False
+
+def sendPortal(recieverEmail, subject, htmlContent):
+    smtp = signIn()
+    if not smtp:
+        print(f"[X] SMTP sign-in failed. Email to {recieverEmail} not sent.")
+        return False
+
+    try:
+        msg = MIMEMultipart("related")
+        msg["From"] = senderEmail
+        msg["To"] = recieverEmail
+        msg["Subject"] = subject
+        msg.attach(MIMEText(str(htmlContent), 'html'))
+        smtp.sendmail(senderEmail, recieverEmail, msg.as_string())
+        smtp.quit()
+        print(f"[+] Email sent successfully to {recieverEmail}")
+        return True
+    except smtplib.SMTPRecipientsRefused:
+        print(f"[X] Invalid email address: {recieverEmail}. Saving to unsent list.")
+        return False
+    except Exception as e:
+        print(f"[X] Error sending email: {e}")
+        return False
+    

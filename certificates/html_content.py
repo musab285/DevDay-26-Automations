@@ -1,71 +1,9 @@
-#scripts for fetching html contents for emails/images
-
-whatsapp_links = {
-    "AI Got Talent": "https://chat.whatsapp.com/KFcculoGh3wKEQ3o0w9TT4",
-    "Today We are VibeCoding": "https://chat.whatsapp.com/EhbHja96MPQBbDyVElHtFn",
-    "Guilty By Data": "https://chat.whatsapp.com/ENFhl5g0Npn8bNEGKQqakJ",
-    "Prompt Prognosis": "https://chat.whatsapp.com/H24TOSu42BMKGcCSfl7wlm",
-    "Debug Relay": "https://chat.whatsapp.com/J91P7yQ0js3CfL9XYGzJCo?mode=gi_t",
-    "Digital Scavenger Hunt": "https://chat.whatsapp.com/KieyaNVQ1pYLjnnyQALssz",
-    "SysCore": "https://chat.whatsapp.com/DdtrZBEgPvA2CSqEHTxOvH?mode=gi_t",
-    "Class Wars": "https://chat.whatsapp.com/INxoHTEX2jHCWRc3uV95kv?mode=gi_t",
-    "Competitive Programming": "https://chat.whatsapp.com/I0HqC7urkcM6hcs4ZqVCBN?mode=gi_t",
-    "Code Sprint": "https://chat.whatsapp.com/JwRNu8GgmQNC0cWGirxjIb?mode=gi_t",
-    "Recursion Hell: Find the Exit": "https://chat.whatsapp.com/DRwl114pKk42QYAkok22M1",
-    "SQL Showdown": "https://chat.whatsapp.com/DQKK7aaN6wE6Gf9GYYpHIW?mode=gi_t",
-    "API Blitz": "https://chat.whatsapp.com/K5PrjeVK6WcG7rSRrLYSM8?mode=gi_t",
-    "Hackathon": "https://chat.whatsapp.com/L2HFFTx8shjEkAcH7Fugwv",
-    "Design Arena": "https://chat.whatsapp.com/DfV6ps8LuGU2NZIwjO5RLt",
-    "Fin Fusion": "https://chat.whatsapp.com/FLGFsJI8tEM7NyHaOqxGMc",
-    "Crime Scene Investigation": "https://chat.whatsapp.com/JgYZmKOO77sFVZ4UVcWqra",
-    "Karaoke": "",
-    "Chess": "https://chat.whatsapp.com/LQhQ9nBWB494E9JxPqUWeD",
-    "Scavenger Hunt": "https://chat.whatsapp.com/LkjhpKkPWBaDLQugJqDIGg",
-}
-
-def get_html_content(template_path, params):
+def get_html_content(template_path, name, comp):
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
 
     # Replace placeholders with actual values
-    # html_content = template.format(name=params["name"], position=params["position"], team=params["team"])
-    # html_content = template.format(name=params["name"], code=params["code"])
-
-    # html_content = template.format(
-    #   TeamName=params['team_name'],
-    #   LeaderName=params['leader_name'],
-    #   OtherMembers=params['other_members'],
-    #   ModuleName=params['module_name'],
-    #   Time=f"{params['start_time'].strftime('%I:%M %p').lstrip('0')} - {params['end_time'].strftime('%I:%M %p').lstrip('0')}",
-    #   Venue=params['venue'],
-    #   LaptopRequired= "Yes" if params.get('is_laptop_required') else "No",
-    #   link=whatsapp_links.get(params['module_name'], "")
-    # )
-
-    # html_content = template.format(ParticipantName=params['participant_name'])
-
-    # html_content = template.format(
-    #     TeamName=params['team_name'],
-    #     LeaderName=params['leader_name'],
-    #     OtherMembers=params['other_members'],
-    #     ModuleName=params['module_name'],
-    #     CompetitionStatus=params['competition_status'],
-    #     TeamReferenceID=params['team_reference_id'],
-    # )
-    html_content = template.format(
-        TeamName=params['team_name'],
-        ModuleName=params['module_name'],
-    )
-
-
-    return html_content
-
-def get_image_content(template_path, name, position, team, img):
-    with open(template_path, "r", encoding="utf-8") as f:
-        template = f.read()
-    # img = "C:/Users/ABC/Documents/DevDay-26-Automations/images/letterhead.jpeg"
-    # Replace placeholders with actual values
-    html_content = template.format(name=name, position=position, team=team,image_path=img)
+    html_content = template.format(participant_name=name, competition_name=comp)
 
     return html_content
 
@@ -177,7 +115,7 @@ def get_confirmation_content(template_path, params, comp):
 # def get_html_content(name, position, team):
 
 
-# def get_image_content(name, position, team, date, image_path):
+def get_image_content(name, position, team, date, image_path):
     html = f"""
     <html>
     <head>
